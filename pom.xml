@@ -161,7 +161,10 @@
         </dependency>
     </dependencies>
 
-    <!-- 普通的maven打包方式 -->
+
+
+
+    <!-- 普通的maven打包方式
     <build>
         <plugins>
             <plugin>
@@ -169,7 +172,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
     <!-- 普通的maven打包方式 -->
 
     <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
@@ -206,5 +209,51 @@
         </plugins>
     </build>-->
     <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <!-- not append assembly id in release file name -->
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>src/main/resources/assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+            <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-deploy-plugin</artifactId>
+			    <version>2.7</version>
+			    <configuration>
+			        <skip>true</skip>
+			    </configuration>
+		  	</plugin>
+		  	 -->
+        </plugins>
+    </build>
+
 
 </project>
