@@ -125,7 +125,7 @@
             this.on("success", function (file, msg) {
                 console.log(file);
                 if (msg.success !== true) {
-                    tale.alertError('上传文件大于1M');
+                    tale.alertError('上传文件大于10M');
                 }
                 setTimeout(function () {
                     window.location.reload();
