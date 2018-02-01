@@ -3,7 +3,7 @@
 <!-- status="off",log4j2把自身事件记录到控制台的配置，off表示不记录，其余的记录有trace，debug，info，warn，error，fatal -->
 <!-- monitorInterval表示检测更改配置的时间,单位是秒,最小间隔为5秒,0或负数表示不检测 -->
 <configuration name="test-cfg" status="off" monitorInterval="0">
-
+    <jmxConfigurator/>
     <!-- 常量引用 -->
     <properties>
         <!--<property name="LOG_HOME">/opt/logs/api-logs/</property>-->
