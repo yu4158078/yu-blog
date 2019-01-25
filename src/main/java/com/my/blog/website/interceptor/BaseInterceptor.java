@@ -9,6 +9,10 @@ import com.my.blog.website.constant.WebConst;
 import com.my.blog.website.dto.Types;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +29,7 @@ import java.util.Map;
  * 自定义拦截器
  * Created by BlueT on 2017/3/9.
  */
+@Order(100)
 @Component
 public class BaseInterceptor implements HandlerInterceptor {
     private static final Logger LOGGE = LoggerFactory.getLogger(BaseInterceptor.class);
@@ -35,6 +42,9 @@ public class BaseInterceptor implements HandlerInterceptor {
     private IOptionService optionService;
 
     private MapCache cache = MapCache.single();
+
+    @Value("${session.expire.time}")
+    private Integer expireTime;
 
     @Resource
     private Commons commons;
@@ -68,7 +78,7 @@ public class BaseInterceptor implements HandlerInterceptor {
         if (request.getMethod().equals("GET")) {
             String csrf_token = UUID.UU64();
             // 默认存储30分钟
-            cache.hset(Types.CSRF_TOKEN.getType(), csrf_token, uri, 30 * 60);
+            cache.hset(Types.CSRF_TOKEN.getType(), csrf_token, uri, expireTime);
             request.setAttribute("_csrf_token", csrf_token);
         }
         return true;

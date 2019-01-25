@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 public final class Commons {
 
     public static String THEME = "themes/default";
+    public static String SITE_URL = "http://www.blog.yushijun.com";
 
     /**
      * 判断分页中是否有数据
@@ -51,7 +52,7 @@ public final class Commons {
      * @return
      */
     public static String site_url(String sub) {
-        return site_option("site_url") + sub;
+        return SITE_URL + sub;
     }
 
     /**
